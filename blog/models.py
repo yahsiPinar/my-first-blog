@@ -14,10 +14,3 @@ class Post(models.Model):
         self.save() #save() objeyi veritabanına kaydeder
     def __str__(self):
         return self.title
-
-# migration python modelinde yapılan değişikliklerle veritabanını bir araya getirmek için kullanılır.
-# makemigrations modelde yapılan değişikliklere göre yeni migrationlar oluşturur.
-# migrate bu migrationları veritabanına uygular.
-# modeli veritabanına eklemek için
-# python manage.py makemigrations blog
-# python manage.py migrate blog
