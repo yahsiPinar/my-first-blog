@@ -16,4 +16,21 @@
           <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
+  <hr>
+  <a class="btn btn-default" href="{% url 'add_comment' pk=post.pk %}">Add Comment</a>
+  {% for commit in post.comments.all %}
+    {% if user.is_authenticated or commit.approved_comment %}
+      <div class="commits">
+          <div class="date">{{commit.created_date}}</div>
+          {% if not commit.approved_comment %}
+            <a class="btn btn-default" href="{% url 'remove_comment' pk=commit.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+            <a class="btn btn-default" href="{% url 'approve_comment' pk=commit.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+          {%endif%}
+          <strong>{{commit.author}}</strong>
+          <p>{{commit.text|linebreaks}}</p>
+      </div>
+    {%endif%}
+  {% empty %}
+    <p>No comments here yet :(</p>
+  {%endfor%}
 {% endblock %}

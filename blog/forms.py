@@ -1,10 +1,16 @@
 from django import forms
-from .models import Post
+from .models import Post,Commit
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title','text')
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Commit
+        fields = ('author','text')
+
 
 
 # post oluşturmak için bir form tasarladığımız için model post olmalı
