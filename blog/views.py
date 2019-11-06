@@ -87,12 +87,17 @@ def approve_comment(request,pk):
     comment.approve()
     return redirect('post_detail',pk=comment.post.pk)
 
-def sign_up(response):
-    if response.method == 'POST':
-        form = SignupForm(response.POST)
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
         if form.is_valid():
+            userObject= form.cleaned_data
+            username = userObject['username']
+            password = userObject['password1']
             form.save()
-        return redirect("post_list")
+            new_user = authenticate(username=username,password=password)
+            login(request, new_user)
+        return redirect('post_list')
     else:
         form = SignupForm()
-    return render(response,'registration/signup.html',{'form':form})
+    return render(request,'registration/signup.html',{'form':form})
